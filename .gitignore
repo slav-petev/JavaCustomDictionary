@@ -1,6 +1,9 @@
 #IDE files
 .idea/
 
+# IDE files
+.idea/
+
 # Compiled class file
 *.class
 
