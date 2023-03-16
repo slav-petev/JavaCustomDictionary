@@ -5,9 +5,9 @@ import java.util.Objects;
 public class StaticDictionary<TKey, TValue> {
     private static final int initialCapacity = 1 << 4;
 
-    private KeyValuePair<TKey, TValue>[] entries;
+    private final KeyValuePair<TKey, TValue>[] entries;
     private int size = 0;
-    private double loadFactor = 0.75;
+    private final double loadFactor = 0.75;
     private int capacity = initialCapacity;
 
     public StaticDictionary() {
