@@ -12,6 +12,6 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
       - name: Clean Maven
-        run: mvn clean all
+        run: mvn clean all --file StaticDictionary/pom.xml
       - name: Build with Maven
         run: mvn -B package --file StaticDictionary/pom.xml
