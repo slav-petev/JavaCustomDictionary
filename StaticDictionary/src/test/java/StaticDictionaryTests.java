@@ -13,7 +13,23 @@ public class StaticDictionaryTests {
     }
 
     @Test
-    void pilotTest() {
-        Assertions.assertNotEquals(null, this.testDictionary, "");
+    public void sizeShouldBeOneWhenAddingToEmpty() throws Exception {
+        this.testDictionary.put("Java", 1);
+
+        Assertions.assertEquals(1, this.testDictionary.size());
+    }
+
+    @Test
+    public void shouldUpdateValueWhenKeyExists() throws Exception {
+        this.testDictionary.put("Java", 1);
+        int newValue = 10;
+        this.testDictionary.put("Java", newValue);
+
+        Assertions.assertEquals(newValue, this.testDictionary.get("Java"));
+    }
+
+    @Test
+    public void shouldReturnNullWhenRetrievingNonExistingKey() {
+        Assertions.assertNull(this.testDictionary.get("C#"));
     }
 }

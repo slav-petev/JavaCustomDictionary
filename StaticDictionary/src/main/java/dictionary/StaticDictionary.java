@@ -90,6 +90,44 @@ public class StaticDictionary<TKey, TValue> {
         return value;
     }
 
+    public TValue delete(TKey key) throws Exception {
+        int position = this.calculateHash(key);
+        KeyValuePair<TKey, TValue> entry = this.entries[position];
+        if(entry == null)
+            return null;
+
+        if (Objects.equals(entry.key(), key)) {
+            // if deleted node as nodes on it, lets give them a chance to re insert it back
+            if(entry.next() != null) {
+                KeyValuePair<TKey,TValue> tmp = entry.next();
+                while(tmp != null) {
+                    this.put(tmp.key(), tmp.value());
+                    tmp = tmp.next();
+                }
+            }
+            // mark current bukcet pos null as head is deleted now
+            entries[position] = null;
+            size--;
+            return entry.value();
+        }
+        // collision state, so we need find and delete and reattach nodes
+        KeyValuePair<TKey, TValue> head = entry.next();
+        KeyValuePair<TKey, TValue> parent = entry;
+        // 1 [2,3,4]
+        while (head != null) {
+            if (Objects.equals(head.key(), key)) {
+                // re attach nodes
+                parent.setNext(head.next());
+                this.size--;
+                return head.value();
+            }
+            parent = head;
+            head = head.next();
+        }
+
+        return null;
+    }
+
     private int calculateHash(TKey key) {
         return Objects.hash(key) % this.entries.length;
     }
