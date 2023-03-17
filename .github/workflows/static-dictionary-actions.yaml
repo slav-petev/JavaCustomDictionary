@@ -3,6 +3,9 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./StaticDictionary
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -12,8 +15,8 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
       - name: Clean Maven
-        run: mvn clean --file StaticDictionary/pom.xml
+        run: mvn clean
       - name: Build with Maven
-        run: mvn -B package --file StaticDictionary/pom.xml
+        run: mvn -B package
       - name: Run Tests
         run: mvn surefire:test
